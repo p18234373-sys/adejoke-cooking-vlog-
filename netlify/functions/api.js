@@ -90,7 +90,7 @@ app.post("/api/pay/initialize",async(req,res)=>{
     const o=r.rows[0];if(o.status!=="Accepted")return json(res,{error:"The restaurant must accept your order before payment can be made."},409);
     if(o.payment_status==="paid")return json(res,{paid:true});
     const reference="ACV-"+String(o.id).replace(/-/g,"")+"-"+Date.now();
-    const resp=await fetch("https://api.paystack.co/transaction/initialize",{method:"POST",headers:{Authorization:"Bearer "+key,"Content-Type":"application/json"},body:JSON.stringify({email,amount:Math.round(Number(o.total)*100),currency:"NGN",reference,metadata:{order_id:String(o.id)}})});
+    const resp=await fetch("https://api.paystack.co/transaction/initialize",{method:"POST",headers:{Authorization:"Bearer "+key,"Content-Type":"application/json"},body:JSON.stringify({email,amount:Math.round(Number(o.total)*100),currency:"NGN",reference,callback_url:new URL("/track/?id="+encodeURIComponent(String(o.id)),req.protocol+"://"+req.get("host")).toString(),metadata:{order_id:String(o.id)}})});
     const data=await resp.json();if(!resp.ok||!data.status)return json(res,{error:data.message||"Could not start payment."},502);
     await db().query("UPDATE orders SET payment_status='pending',payment_reference=$1,payment='Pay online (Paystack)' WHERE id=$2",[data.data.reference,o.id]);
     return json(res,{authorization_url:data.data.authorization_url,reference:data.data.reference});

@@ -1,0 +1,33 @@
+name = "Adejoke Cooking Vlog"
+tagline = "Nigerian meals made with love"
+description = "Online ordering for Adejoke Cooking Vlog with delivery, pickup, restaurant admin, order approval, tracking and Paystack payments."
+category = "Food & Restaurants"
+tags = ["restaurant","nigerian-food","ordering","delivery"]
+
+[auth]
+enabled = true
+providers = ["email"]
+signup = "open"
+hosted_login = true
+
+[[secret]]
+name = "PAYSTACK_SECRET_KEY"
+provider = "custom"
+required = false
+expose = true
+description = "Paystack secret key for accepting online NGN payments. Leave unset to keep cash and bank transfer available."
+
+[[config]]
+name = "whatsapp_number"
+type = "string"
+label = "Restaurant WhatsApp number"
+help = "Use international format without +, for example 2348012345678."
+default = "2348000000000"
+required = true
+
+[[config]]
+name = "delivery_fee"
+type = "number"
+label = "Delivery fee in Naira"
+default = 1500
+required = true

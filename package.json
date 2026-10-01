@@ -1,0 +1,11 @@
+{
+  "name":"adejoke-cooking-vlog",
+  "private":true,
+  "version":"1.0.0",
+  "dependencies":{
+    "@netlify/database":"latest",
+    "express":"latest",
+    "pg":"latest",
+    "serverless-http":"latest"
+  }
+}

@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS orders (id UUID PRIMARY KEY DEFAULT gen_random_uuid(), customer_name TEXT NOT NULL, phone TEXT NOT NULL, method TEXT NOT NULL, address TEXT, notes TEXT, items JSONB NOT NULL, total NUMERIC NOT NULL, status TEXT NOT NULL DEFAULT 'Pending', created_at TIMESTAMPTZ NOT NULL DEFAULT NOW())
